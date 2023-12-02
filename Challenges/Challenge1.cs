@@ -1,5 +1,3 @@
-using System.Collections.Immutable;
-
 internal class Challenge1 : IChallenge
 {
     public void HelpSantaPartOne() 
@@ -55,7 +53,7 @@ internal class Challenge1 : IChallenge
             coordinateList.Add(coordinateDigit);
         }
 
-        // Console.WriteLine($"Coordinate for Santa (Day 1 Part 2 Challenge): {SumAllRowCoordinates(coordinateList)}");
+        Console.WriteLine($"Coordinate for Santa (Day 1 Part 2 Challenge): {SumAllRowCoordinates(coordinateList)}");
     }
 
     static private string FindFirstCoordinate(string rowCoordinates) 
@@ -81,18 +79,73 @@ internal class Challenge1 : IChallenge
     static private string FindFirstCoordinate(string rowCoordinates, List<KeyValuePair<string, int>> knownDigits)
     {
         // First, find the first digit (if any) then find the first 'string' digit if any, then compare string indices
+        var foundDigit = "0";
         var potentialFoundDigit = FindFirstCoordinate(rowCoordinates);
-        var potentialFoundStringDigit = knownDigits.FirstOrDefault(w => rowCoordinates.Contains(w.Key)).Value;
+        var potentialFoundStringDigit = knownDigits[0];
 
-        Console.WriteLine($"Potential Found Digit: {potentialFoundDigit}");
-        Console.WriteLine($"Potential Found String Digit: {potentialFoundStringDigit}");
+        foreach(var digit in knownDigits)
+        {
+            if(!rowCoordinates.Contains(potentialFoundStringDigit.Key, StringComparison.CurrentCulture) || rowCoordinates.Contains(digit.Key) 
+                && rowCoordinates.IndexOf(digit.Key) < rowCoordinates.IndexOf(potentialFoundStringDigit.Key))
+            {
+                potentialFoundStringDigit = digit;
+            }
+        }
 
-        return "1";
+        var isPotentialFoundDigitNullOrEmpty = string.IsNullOrEmpty(potentialFoundDigit);
+        var isPotentialFoundStringDigitNotThere = rowCoordinates.IndexOf(potentialFoundStringDigit.Key);
+
+        if(isPotentialFoundDigitNullOrEmpty && isPotentialFoundStringDigitNotThere != -1)
+        {
+            foundDigit = potentialFoundStringDigit.Value.ToString(); // Yeah I know, but I am lazy...
+        }
+        else if(!isPotentialFoundDigitNullOrEmpty && isPotentialFoundStringDigitNotThere == -1) 
+        {
+            foundDigit = potentialFoundDigit;
+        }
+        else if(!isPotentialFoundDigitNullOrEmpty && isPotentialFoundStringDigitNotThere != -1) 
+        {
+            foundDigit = rowCoordinates.IndexOf(potentialFoundDigit) < rowCoordinates.IndexOf(potentialFoundStringDigit.Key) ?
+                potentialFoundDigit : potentialFoundStringDigit.Value.ToString();
+        }
+
+        return foundDigit;
     }
 
     static private string FindLastRowCoordinate(string rowCoordinates, List<KeyValuePair<string, int>> knownDigits)
     {
-        return "1";
+        // First, find the last digit (if any) then find the last 'string' digit if any, then compare string indices
+        var foundDigit = "0";
+        var potentialFoundDigit = FindLastRowCoordinate(rowCoordinates);
+        var potentialFoundStringDigit = knownDigits[0];
+
+        foreach(var digit in knownDigits)
+        {
+            if(!rowCoordinates.Contains(potentialFoundStringDigit.Key, StringComparison.CurrentCulture) || rowCoordinates.Contains(digit.Key) 
+                && rowCoordinates.LastIndexOf(digit.Key) > rowCoordinates.LastIndexOf(potentialFoundStringDigit.Key))
+            {
+                potentialFoundStringDigit = digit;
+            }
+        }
+
+        var isPotentialFoundDigitNullOrEmpty = string.IsNullOrEmpty(potentialFoundDigit);
+        var isPotentialFoundStringDigitNotThere = rowCoordinates.LastIndexOf(potentialFoundStringDigit.Key);
+
+        if(isPotentialFoundDigitNullOrEmpty && isPotentialFoundStringDigitNotThere != -1)
+        {
+            foundDigit = potentialFoundStringDigit.Value.ToString(); // Yeah I know, but I am lazy...
+        }
+        else if(!isPotentialFoundDigitNullOrEmpty && isPotentialFoundStringDigitNotThere == -1) 
+        {
+            foundDigit = potentialFoundDigit;
+        }
+        else if(!isPotentialFoundDigitNullOrEmpty && isPotentialFoundStringDigitNotThere != -1) 
+        {
+            foundDigit = rowCoordinates.LastIndexOf(potentialFoundDigit) > rowCoordinates.LastIndexOf(potentialFoundStringDigit.Key) ?
+                potentialFoundDigit : potentialFoundStringDigit.Value.ToString();
+        }
+
+        return foundDigit;
     }
     
     static private int SumAllRowCoordinates(List<int> rowCoordinates)

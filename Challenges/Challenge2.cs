@@ -32,6 +32,22 @@ internal class Challenge2 : IChallenge
 
     public void HelpSantaPartTwo()
     {
-        throw new NotImplementedException();
+        /*
+            We now need to now multipy by multiple the power of cubes. Or something...
+            Idk. Math.
+        */
+        
+        // Get text file
+        var gameRecordsList = File.ReadAllLines("./TestFiles/Challenge2.txt");
+        var parsedRecordsList = new List<GameModel>();
+
+        foreach(var gameRecord in gameRecordsList)
+        {
+            var gameModel = new GameModel(gameRecord);
+            parsedRecordsList.Add(gameModel);
+        }
+
+        var countOfColorage = parsedRecordsList.Sum(s => s.RedCount.Max() * s.BlueCount.Max() * s.GreenCount.Max());
+        Console.WriteLine($"The ids of all possible games for Santa (Day 2 Part 1 Challenge): {countOfColorage}");
     }
 }

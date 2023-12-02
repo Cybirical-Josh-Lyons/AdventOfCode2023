@@ -6,31 +6,14 @@
             throw new Exception("Please provide a challenge to run. 1 - 25 (Usage: 'dotnet run 1' or 'dotnet run 1 2')");
 
         case 1:
-            var className = $"Challenge{args[0]}";
-            var objectType = Type.GetType(className);
-            if(objectType != null) {
-                dynamic instanceObject = Activator.CreateInstance(objectType) ?? throw new Exception("Unable to create class from provided argument.");
-                try 
-                {
-                    instanceObject.HelpSantaPartOne();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Could not help Santa (part 1): {e.Message}");
-                }
-                try 
-                {
-                    instanceObject.HelpSantaPartTwo();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Could not help Santa (part 2): {e.Message}");
-                }
-            }
+            SantasHelper(args[0]);
             break;
 
         case > 1:
-            // If multiple arguments provided; loop through and output pretty-like
+            foreach(var arg in args)
+            {
+                SantasHelper(arg);
+            }
             break;
 
         default:
@@ -40,4 +23,31 @@
 catch (Exception ex) 
 {
     Console.WriteLine(ex.Message);
+}
+
+void SantasHelper(string passedArgument) {
+    if(!int.TryParse(passedArgument, out var challengeNumber))
+        throw new Exception($"Invalid numeric argument passed: {args[0]}. Please fix and retry.");
+        
+    var className = $"Challenge{challengeNumber}";
+    var objectType = Type.GetType(className);
+    if(objectType != null) {
+        dynamic instanceObject = Activator.CreateInstance(objectType) ?? throw new Exception("Unable to create class from provided argument.");
+        try 
+        {
+            instanceObject.HelpSantaPartOne();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Could not help Santa (part 1): {e.Message}");
+        }
+        try 
+        {
+            instanceObject.HelpSantaPartTwo();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Could not help Santa (part 2): {e.Message}");
+        }
+    }
 }

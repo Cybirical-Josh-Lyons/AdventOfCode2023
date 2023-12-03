@@ -27,7 +27,7 @@ catch (Exception ex)
 
 void SantasHelper(string passedArgument) {
     if(!int.TryParse(passedArgument, out var challengeNumber))
-        throw new Exception($"Invalid numeric argument passed: {args[0]}. Please fix and retry.");
+        throw new Exception($"Invalid numeric argument passed: {passedArgument}. Please fix and retry.");
         
     var className = $"Challenge{challengeNumber}";
     var objectType = Type.GetType(className);

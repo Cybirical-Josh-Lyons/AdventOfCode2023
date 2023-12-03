@@ -1,4 +1,4 @@
-internal class Challenge3 : IChallenge
+internal sealed class Challenge3 : IChallenge
 {
     private readonly char[,] _challengeData;
     private readonly char[] _specialCharacters; 

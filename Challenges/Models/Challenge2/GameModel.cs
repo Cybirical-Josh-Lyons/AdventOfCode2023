@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-public partial class GameModel
+sealed partial class GameModel
 {
     public int Id {get; private set;}
     public List<int> BlueCount {get; private set;}

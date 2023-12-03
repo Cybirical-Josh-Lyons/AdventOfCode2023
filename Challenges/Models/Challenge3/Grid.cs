@@ -1,4 +1,4 @@
-internal class Grid
+internal sealed class Grid
 {
     public Point TopLeft {get; private set;}
     public Point TopCenter {get; private set;}

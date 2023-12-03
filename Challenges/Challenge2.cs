@@ -1,4 +1,4 @@
-internal class Challenge2 : IChallenge
+internal sealed class Challenge2 : IChallenge
 {
     private readonly string[] _gameRecordsList;
     private readonly int RED_CUBE_COUNT = 12, 

@@ -1,4 +1,4 @@
-internal class Challenge1 : IChallenge
+internal sealed class Challenge1 : IChallenge
 {
     private readonly string[] _coordinatesRaw;
 

@@ -1,5 +1,12 @@
 internal class Challenge1 : IChallenge
 {
+    private readonly string[] _coordinatesRaw;
+
+    public Challenge1() 
+    {
+        _coordinatesRaw = Utils.GetChallengeFileLines("1");
+    }
+
     public void HelpSantaPartOne() 
     {
         /* For the day 1 challenge, we 
@@ -10,14 +17,13 @@ internal class Challenge1 : IChallenge
 
         // Get text file
         var coordinateList = new List<int>();
-        var coordinatesRaw = File.ReadAllText("./TestFiles/Challenge1.txt").Split('\n');
-        foreach(var coordinate in coordinatesRaw) 
+        foreach(var coordinate in _coordinatesRaw) 
         {
             var coordinateDigit = int.Parse($"{FindFirstCoordinate(coordinate)}{FindLastRowCoordinate(coordinate)}");
             coordinateList.Add(coordinateDigit);
         }
 
-        Console.WriteLine($"Cooridnate for Santa (Day 1 Part 1 Challenge): {SumAllRowCoordinates(coordinateList)}");
+        Utils.PrintMessageForSanta("1", "1", SumAllRowCoordinates(coordinateList));
     }
 
     public void HelpSantaPartTwo()
@@ -33,7 +39,6 @@ internal class Challenge1 : IChallenge
         // Get text file
 
         var coordinateList = new List<int>();
-        var coordinatesRaw = File.ReadAllText("./TestFiles/Challenge1.txt").Split('\n');
         var knownDigits = new List<KeyValuePair<string, int>>
         {
             new("one", 1),
@@ -47,13 +52,13 @@ internal class Challenge1 : IChallenge
             new("nine", 9)
         };
 
-        foreach(var coordinate in coordinatesRaw)
+        foreach(var coordinate in _coordinatesRaw)
         {
             var coordinateDigit = int.Parse($"{FindFirstCoordinate(coordinate, knownDigits)}{FindLastRowCoordinate(coordinate, knownDigits)}");
             coordinateList.Add(coordinateDigit);
         }
 
-        Console.WriteLine($"Coordinate for Santa (Day 1 Part 2 Challenge): {SumAllRowCoordinates(coordinateList)}");
+        Utils.PrintMessageForSanta("1", "2", SumAllRowCoordinates(coordinateList));
     }
 
     static private string FindFirstCoordinate(string rowCoordinates) 

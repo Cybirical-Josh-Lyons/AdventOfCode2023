@@ -1,8 +1,15 @@
 internal class Challenge2 : IChallenge
 {
+
+    private readonly string[] _gameRecordsList;
     private readonly int RED_CUBE_COUNT = 12, 
         GREEN_CUBE_COUNT = 13, 
         BLUE_CUBE_COUNT = 14;
+
+    public Challenge2()
+    {
+        _gameRecordsList = Utils.GetChallengeFileLines("2");
+    }
 
     public void HelpSantaPartOne()
     {
@@ -12,12 +19,9 @@ internal class Challenge2 : IChallenge
             The goal here is to get the games where results recorder
             were possible given the bag stats that we know of.
         */
-        
-        // Get text file
-        var gameRecordsList = File.ReadAllLines("./TestFiles/Challenge2.txt");
         var parsedRecordsList = new List<GameModel>();
 
-        foreach(var gameRecord in gameRecordsList)
+        foreach(var gameRecord in _gameRecordsList)
         {
             var gameModel = new GameModel(gameRecord);
             gameModel.WasGamePossible(RED_CUBE_COUNT, BLUE_CUBE_COUNT, GREEN_CUBE_COUNT);
@@ -27,7 +31,7 @@ internal class Challenge2 : IChallenge
         var games = parsedRecordsList.Where(w => w.GameWasPossible == true);
 
         var possibleGameIdSum = parsedRecordsList.FindAll(f => f.GameWasPossible == true).Sum(s => s.Id);
-        Console.WriteLine($"The ids of all possible games for Santa (Day 2 Part 1 Challenge): {possibleGameIdSum}");
+        Utils.PrintMessageForSanta("2", "1", possibleGameIdSum);
     }
 
     public void HelpSantaPartTwo()
@@ -36,18 +40,15 @@ internal class Challenge2 : IChallenge
             We now need to now multipy by multiple the power of cubes. Or something...
             Idk. Math.
         */
-        
-        // Get text file
-        var gameRecordsList = File.ReadAllLines("./TestFiles/Challenge2.txt");
         var parsedRecordsList = new List<GameModel>();
 
-        foreach(var gameRecord in gameRecordsList)
+        foreach(var gameRecord in _gameRecordsList)
         {
             var gameModel = new GameModel(gameRecord);
             parsedRecordsList.Add(gameModel);
         }
 
         var countOfColorage = parsedRecordsList.Sum(s => s.RedCount.Max() * s.BlueCount.Max() * s.GreenCount.Max());
-        Console.WriteLine($"The ids of all possible games for Santa (Day 2 Part 1 Challenge): {countOfColorage}");
+        Utils.PrintMessageForSanta("2", "2", countOfColorage);
     }
 }

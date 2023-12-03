@@ -55,7 +55,27 @@ internal class Challenge3 : IChallenge
 
     public void HelpSantaPartTwo()
     {
-        throw new NotImplementedException();
+        /*
+            Apparently we are a bunch of bone heads...
+            We messed something up, more fixes for the cogs!
+            We need the gear ratios as well, each '*' gear needs
+            2 numbers associated with it!
+        */
+        var partNumbers = new List<int>();
+
+        for(var x = 0; x < _challengeData.GetLength(0); x++)
+        {
+            for(var y = 0; y < _challengeData.GetLength(1); y++)
+            {
+                // We have symbol
+                if(!char.IsDigit(_challengeData[x,y]) && _specialCharacters.Contains(_challengeData[x,y]))
+                {
+                    partNumbers.Add(FindGearRatios(x, y));
+                }
+            }
+        }
+
+        Utils.PrintMessageForSanta("3", "2", partNumbers.Sum(x => x));
     }
 
     private List<int> FindDigits(int startingRow, int startingColumn)
@@ -71,6 +91,15 @@ internal class Challenge3 : IChallenge
         }
 
         return partNumberList;
+    }
+
+    private int FindGearRatios(int startingRow, int startingColumn)
+    {
+        var resultList = FindDigits(startingRow, startingColumn);
+
+        if(resultList.Count(c => c > 0) != 2) return 0;
+
+        return resultList.Where(w => w > 0).Aggregate(1, (x, y) => x * y);
     }
 
     private int BuildDigit(Point checkPoint, Grid currentGrid, List<int> currentList)

@@ -1,6 +1,4 @@
-﻿if(args[0] == "all") goto DoAll;
-
-try 
+﻿try 
 {
     switch(args.Length) 
     {
@@ -57,8 +55,4 @@ static void SantasHelper(string passedArgument) {
         Console.WriteLine($"Challenge class not yet created for {passedArgument}");
     }
 }
-
-// We want to bypass previous stuff. Lets do some good ole' fashion 'goto' :)
-DoAll:
-    for(var i = 1; i < 26; i++)
-        SantasHelper(i.ToString());
+    

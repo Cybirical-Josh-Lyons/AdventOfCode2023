@@ -1,4 +1,6 @@
-﻿try 
+﻿if(args[0] == "all") goto DoAll;
+
+try 
 {
     switch(args.Length) 
     {
@@ -25,9 +27,9 @@ catch (Exception ex)
     Console.WriteLine(ex.Message);
 }
 
-void SantasHelper(string passedArgument) {
+static void SantasHelper(string passedArgument) {
     if(!int.TryParse(passedArgument, out var challengeNumber))
-        throw new Exception($"Invalid numeric argument passed: {passedArgument}. Please fix and retry.");
+        throw new Exception($"Invalid numeric argument passed: '{passedArgument}'. Please fix and retry.");
         
     var className = $"Challenge{challengeNumber}";
     var objectType = Type.GetType(className);
@@ -50,4 +52,13 @@ void SantasHelper(string passedArgument) {
             Console.WriteLine($"Could not help Santa (part 2): {e.Message}");
         }
     }
+    else 
+    {
+        Console.WriteLine($"Challenge class not yet created for {passedArgument}");
+    }
 }
+
+// We want to bypass previous stuff. Lets do some good ole' fashion 'goto' :)
+DoAll:
+    for(var i = 1; i < 26; i++)
+        SantasHelper(i.ToString());

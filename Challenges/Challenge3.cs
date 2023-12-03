@@ -46,6 +46,7 @@ internal class Challenge3 : IChallenge
                 if(!char.IsDigit(_challengeData[x,y]) && _specialCharacters.Contains(_challengeData[x,y]))
                 {
                     // Now we need to check the surrounding elements
+                    // TODO Fix this, we need to select up to 3 characters
                     var surroundValues = from i in Enumerable.Range(x - 1, x + 1)
                                             from j in Enumerable.Range(y - 1, y + 1)
                                             where char.IsDigit(_challengeData[i, j])

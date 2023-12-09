@@ -9,7 +9,13 @@ internal sealed class Challenge4 : IChallenge
 
     public void HelpSantaPartOne()
     {
-        throw new NotImplementedException();
+        var cards = new List<Card>();
+        foreach(var challengeLine in _challengeData)
+        {
+            cards.Add(new Card(challengeLine));
+        }
+
+        Utils.PrintMessageForSanta("4", "1", cards.Sum(s => s.CardScore));
     }
 
     public void HelpSantaPartTwo()
